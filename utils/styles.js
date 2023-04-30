@@ -13,6 +13,17 @@ const useStyles = makeStyles({
   },
   footer: {
     textAlign: 'center'
+  },
+  brand: {
+    fontWeight: 'bold',
+    fontSize: '1.5rem'
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  rightNavbar: {
+    padding: '0px 8px',
+    fontSize: 18,
   }
 });
 
