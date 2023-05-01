@@ -10,13 +10,14 @@ import React from "react";
 import useStyles from "@/utils/styles";
 import NextLink from "next/link";
 
-function Layout({ children }) {
+function Layout({ children, title, description }) {
   const classes = useStyles();
   return (
     <div>
       <Head>
-        <title>Nextjs ecommerce</title>
+        <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {description && <meta name="description" content={description} />}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppBar position="static" className={classes.navbar}>

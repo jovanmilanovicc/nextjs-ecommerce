@@ -9,22 +9,27 @@ const useStyles = makeStyles({
     },
   },
   main: {
-    minHeight: '80vh',
+    minHeight: "80vh",
   },
   footer: {
-    textAlign: 'center'
+    textAlign: "center",
+    marginTop: 10,
   },
   brand: {
-    fontWeight: 'bold',
-    fontSize: '1.5rem'
+    fontWeight: "bold",
+    fontSize: "1.5rem",
   },
   grow: {
     flexGrow: 1,
   },
   rightNavbar: {
-    padding: '0px 8px',
+    padding: "0px 8px",
     fontSize: 18,
-  }
+  },
+  section: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
 });
 
 export default useStyles;
