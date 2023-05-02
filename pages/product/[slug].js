@@ -25,7 +25,7 @@ function ProductDetails() {
     <Layout title={product.name}>
       <div className={classes.section}>
         <NextLink href="/" passHref>
-          Back to products
+          <Typography>Back to products</Typography>
         </NextLink>
       </div>
       <Grid container spacing={1}>
