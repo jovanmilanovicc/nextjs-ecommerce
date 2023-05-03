@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anatoliygatt/dark-mode-toggle": "^1.0.1",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
     "@material-ui/core": "^4.12.4",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.2",
     "js-cookie": "^3.0.5",
+    "mongoose": "^7.1.0",
     "next": "13.3.2",
     "react": "18.2.0",
     "react-dom": "18.2.0"
