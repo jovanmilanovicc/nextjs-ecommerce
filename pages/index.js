@@ -12,8 +12,9 @@ import {
 import NextLink from "next/link";
 import db from "@/utils/db";
 import Product from "@/models/Products";
+import dynamic from "next/dynamic";
 
-export default function Home(props) {
+function Home(props) {
   return (
     <>
       <Layout title="Home">
@@ -48,6 +49,10 @@ export default function Home(props) {
     </>
   );
 }
+
+export default dynamic(() => Promise.resolve(Home), {
+  ssr: false
+});
 
 export async function getServerSideProps() {
   await db.connect();

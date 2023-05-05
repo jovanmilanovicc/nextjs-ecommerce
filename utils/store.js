@@ -5,7 +5,9 @@ export const Store = createContext();
 const initialState = {
   darkMode: Cookies.get("darkMode") === "ON" ? true : false,
   cart: {
-    cartItems: [],
+    cartItems:  Cookies.get('cartItems')
+    ? JSON.parse(Cookies.get('cartItems'))
+    : [],
   },
 };
 

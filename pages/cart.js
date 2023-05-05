@@ -1,7 +1,9 @@
 import Layout from "@/components/Layout";
+import dynamic from "next/dynamic";
 import { Store } from "@/utils/store";
 import {
   Button,
+  Card,
   Grid,
   List,
   ListItem,
@@ -86,6 +88,7 @@ function CartScreen() {
             </TableContainer>
           </Grid>
           <Grid md={3} xs={12}>
+            <Card>
             <List>
               <ListItem>
                 <Typography variant="h2">
@@ -99,11 +102,12 @@ function CartScreen() {
                 </Typography>
               </ListItem>
               <ListItem>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" fullWidth>
                   Check out
                 </Button>
               </ListItem>
             </List>
+            </Card>
           </Grid>
         </Grid>
       )}
@@ -111,4 +115,6 @@ function CartScreen() {
   );
 }
 
-export default CartScreen;
+export default dynamic(() => Promise.resolve(CartScreen), {
+    ssr: false
+});

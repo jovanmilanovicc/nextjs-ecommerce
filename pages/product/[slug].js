@@ -15,6 +15,7 @@ import Product from "@/models/Products";
 import db from "@/utils/db";
 import axios from "axios";
 import { Store } from "@/utils/store";
+import dynamic from "next/dynamic";
 
 function ProductDetails(props) {
   const { dispatch } = useContext(Store);
@@ -124,4 +125,6 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default ProductDetails;
+export default dynamic(() => Promise.resolve(ProductDetails), {
+  ssr: false
+});
