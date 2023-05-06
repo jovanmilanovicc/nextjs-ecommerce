@@ -6,27 +6,38 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useStyles from "@/utils/styles";
 import NextLink from "next/link";
 import axios from "axios";
+import { Store } from "@/utils/store";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import dynamic from "next/dynamic";
 
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const classes = useStyles();
+  const router = useRouter();
+  const { redirect } = router.query;
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+  
 
   const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    try {
+    e.preventDefault()
+    
       const { data } = await axios.post("/api/users/login", {
         email,
         password,
       });
-      alert("Success login");
-    } catch (error) {
-      alert(error.message);
-    }
+      
+      dispatch({ type: "USER_LOGIN", payload: data });
+      Cookies.set("userInfo", JSON.stringify(data));
+      router.push('/');
+      
+    
   };
 
   return (
@@ -75,4 +86,6 @@ function Login() {
   );
 }
 
-export default Login;
+export default dynamic(() => Promise.resolve(Login), {
+  ssr: false,
+});

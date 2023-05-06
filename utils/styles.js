@@ -36,6 +36,10 @@ const useStyles = makeStyles({
   },
   link: {
     color: '#f0c000',
+  },
+  navbarButton: {
+    color: '#ffffff',
+    textTransform: 'initial',
   }
 });
 

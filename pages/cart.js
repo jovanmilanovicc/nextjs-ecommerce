@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
+  const { userInfo } = state
 
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
@@ -45,7 +46,11 @@ function CartScreen() {
   }
 
   const checkoutHandler = () => {
+    if(userInfo){
     router.push('/shipping');
+    } else{
+      router.push('/login')
+    }
   }
 
   return (
