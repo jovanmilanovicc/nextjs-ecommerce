@@ -21,8 +21,10 @@ import Image from "next/image";
 import NextLink from "next/link";
 import React, { useContext } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 function CartScreen() {
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
 
   const updateCartHandler = async (item, quantity) => {
@@ -40,6 +42,10 @@ function CartScreen() {
       payload: item,
     })
 
+  }
+
+  const checkoutHandler = () => {
+    router.push('/shipping');
   }
 
   return (
@@ -126,7 +132,7 @@ function CartScreen() {
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  <Button variant="contained" color="primary" fullWidth>
+                  <Button variant="contained" color="primary" fullWidth onClick={checkoutHandler}>
                     Check out
                   </Button>
                 </ListItem>
