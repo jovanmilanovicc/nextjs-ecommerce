@@ -20,9 +20,28 @@ import {
 import Image from "next/image";
 import NextLink from "next/link";
 import React, { useContext } from "react";
+import axios from "axios";
 
 function CartScreen() {
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
+
+  const updateCartHandler = async (item, quantity) => {
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      window.alert("Product is out of sstock");
+      return;
+    }
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
+  };
+
+  const removeItemHandler = (item) => {
+    dispatch({
+      type: 'CART_REMOVE_ITEM',
+      payload: item,
+    })
+
+  }
+
   return (
     <Layout title="Shoping Cart">
       <Typography component="h1" variant="h1">
@@ -66,7 +85,12 @@ function CartScreen() {
                       </TableCell>
                       <TableCell align="right">
                         <Typography>
-                          <Select value={item.quantity}>
+                          <Select
+                            value={item.quantity}
+                            onChange={(event) =>
+                              updateCartHandler(item, event.target.value)
+                            }
+                          >
                             {[...Array(item.countInStock).keys()].map((x) => (
                               <MenuItem key={x + 1} value={x + 1}>
                                 {x + 1}
@@ -77,7 +101,7 @@ function CartScreen() {
                       </TableCell>
                       <TableCell align="right">${item.price}</TableCell>
                       <TableCell align="right">
-                        <Button variant="contained" color="secondary">
+                        <Button variant="contained" color="secondary" onClick={() => removeItemHandler(item)}>
                           X
                         </Button>
                       </TableCell>
@@ -89,24 +113,24 @@ function CartScreen() {
           </Grid>
           <Grid md={3} xs={12}>
             <Card>
-            <List>
-              <ListItem>
-                <Typography variant="h2">
-                  Subtotal (
-                  {state.cart.cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
-                  items) : $
-                  {state.cart.cartItems.reduce(
-                    (a, c) => a + c.quantity * c.price,
-                    0
-                  )}
-                </Typography>
-              </ListItem>
-              <ListItem>
-                <Button variant="contained" color="primary" fullWidth>
-                  Check out
-                </Button>
-              </ListItem>
-            </List>
+              <List>
+                <ListItem>
+                  <Typography variant="h2">
+                    Subtotal (
+                    {state.cart.cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
+                    items) : $
+                    {state.cart.cartItems.reduce(
+                      (a, c) => a + c.quantity * c.price,
+                      0
+                    )}
+                  </Typography>
+                </ListItem>
+                <ListItem>
+                  <Button variant="contained" color="primary" fullWidth>
+                    Check out
+                  </Button>
+                </ListItem>
+              </List>
             </Card>
           </Grid>
         </Grid>
@@ -116,5 +140,5 @@ function CartScreen() {
 }
 
 export default dynamic(() => Promise.resolve(CartScreen), {
-    ssr: false
+  ssr: false,
 });

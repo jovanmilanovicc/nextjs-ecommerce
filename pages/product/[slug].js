@@ -18,7 +18,7 @@ import { Store } from "@/utils/store";
 import dynamic from "next/dynamic";
 
 function ProductDetails(props) {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const classes = useStyles();
   const { product } = props;
 
@@ -27,12 +27,16 @@ function ProductDetails(props) {
   }
 
   const addToCartHandler = async () => {
+    
+    
+    const existItem = state.cart.cartItems.find((a) => a._id === product._id)
+    const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
-    if (data.countInStock <= 0) {
+    if (data.countInStock < quantity) {
       window.alert("Product is out of sstock");
       return;
     }
-    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity: 1 } });
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
   };
 
   return (
