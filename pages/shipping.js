@@ -1,18 +1,223 @@
+import Layout from "@/components/Layout";
+import {
+  Button,
+  List,
+  ListItem,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import React, { useContext, useEffect } from "react";
+import useStyles from "@/utils/styles";
 import { Store } from "@/utils/store";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import Cookies from "js-cookie";
+import dynamic from "next/dynamic";
+import { Controller, useForm } from "react-hook-form";
+import CheckoutMenu from "@/components/Checkout";
 
 function Shipping() {
-  const router = useRouter();
   const { state } = useContext(Store);
-  const { userInfo } = state;
+  const {
+    userInfo,
+    cart: { shippingAdress },
+  } = state;
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue,
+  } = useForm();
   useEffect(() => {
     if (!userInfo) {
       router.push("/login?redirect=/shipping");
     }
+    setValue('fullName', shippingAdress.fullName);
+    setValue('adress', shippingAdress.adress);
+    setValue('city', shippingAdress.city);
+    setValue('postal', shippingAdress.postal);
+    setValue('country', shippingAdress.country);
   }, []);
 
-  return <div>shipping</div>;
+  const classes = useStyles();
+  const router = useRouter();
+  const { dispatch } = useContext(Store);
+
+  const onSubmitHandler = ({ fullName, adress, city, postal, country }) => {
+    dispatch({
+      type: "SAVE_SHIPPINING_ADRESS",
+      payload: { fullName, adress, city, postal, country },
+    });
+    Cookies.set(
+      "shippingAdress",
+      JSON.stringify({ fullName, adress, city, postal, country })
+    );
+    router.push("/payment");
+  };
+
+  return (
+    <Layout title="Shipping">
+      <CheckoutMenu activeStep={1}/>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmitHandler)}>
+        <Typography variant="h1" component="h1">
+          Shipping Adress
+        </Typography>
+        <List>
+          <ListItem>
+            <Controller
+              name="fullName"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 2,
+              }}
+              render={({ field }) => (
+                <TextField
+                  color="secondary"
+                  variant="outlined"
+                  fullWidth
+                  id="fullName"
+                  label="Full Name"
+                  error={Boolean(errors.fullName)}
+                  helperText={
+                    errors.fullName
+                      ? errors.fullName.type === "minLength"
+                        ? "Full Name lenght needs to be more than 1"
+                        : "Full Name is required"
+                      : ""
+                  }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="adress"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 5,
+              }}
+              render={({ field }) => (
+                <TextField
+                  color="secondary"
+                  variant="outlined"
+                  fullWidth
+                  id="adress"
+                  label="Adress"
+                  error={Boolean(errors.adress)}
+                  helperText={
+                    errors.adress
+                      ? errors.adress.type === "minLength"
+                        ? "Adress lenght needs to be more than 5"
+                        : "Adress is required"
+                      : ""
+                  }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="city"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 2,
+              }}
+              render={({ field }) => (
+                <TextField
+                  color="secondary"
+                  variant="outlined"
+                  fullWidth
+                  id="city"
+                  label="City"
+                  error={Boolean(errors.city)}
+                  helperText={
+                    errors.city
+                      ? errors.city.type === "minLength"
+                        ? "City lenght needs to be more than 1"
+                        : "City is required"
+                      : ""
+                  }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="postal"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 2,
+              }}
+              render={({ field }) => (
+                <TextField
+                  color="secondary"
+                  variant="outlined"
+                  fullWidth
+                  id="postal"
+                  label="Postal Code"
+                  error={Boolean(errors.postal)}
+                  helperText={
+                    errors.postal
+                      ? errors.postal.type === "minLength"
+                        ? "Postal Code lenght needs to be more than 1"
+                        : "Postal Code is required"
+                      : ""
+                  }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="country"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 2,
+              }}
+              render={({ field }) => (
+                <TextField
+                  color="secondary"
+                  variant="outlined"
+                  fullWidth
+                  id="country"
+                  label="Country"
+                  error={Boolean(errors.country)}
+                  helperText={
+                    errors.country
+                      ? errors.country.type === "minLength"
+                        ? "Country lenght needs to be more than 1"
+                        : "Country is required"
+                      : ""
+                  }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Button variant="contained" fullWidth color="primary" type="submit">
+              Continue
+            </Button>
+          </ListItem>
+        </List>
+      </form>
+    </Layout>
+  );
 }
 
-export default Shipping;
+export default dynamic(() => Promise.resolve(Shipping), {
+  ssr: false,
+});

@@ -8,6 +8,9 @@ const initialState = {
     cartItems: Cookies.get("cartItems")
       ? JSON.parse(Cookies.get("cartItems"))
       : [],
+    shippingAdress: Cookies.get("shippingAdress")
+      ? JSON.parse(Cookies.get("shippingAdress"))
+      : {},
   },
   userInfo: Cookies.get("userInfo")
     ? JSON.stringify(Cookies.get("userInfo"))
@@ -40,6 +43,11 @@ function reducer(state, action) {
       Cookies.set("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case "SAVE_SHIPPING_ADRESS":
+      return {
+        ...state,
+        cart: { ...state.cart, shippingAdress: action.payload },
+      };
     case "USER_LOGIN":
       return { ...state, userInfo: action.payload };
     case "USER_LOGOUT":
