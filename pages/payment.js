@@ -26,7 +26,7 @@ function Payment() {
   } = state;
   const router = useRouter();
 
-   useEffect(() => {
+ /*  useEffect(() => {
     console.log(shippingAdress);
     if (!shippingAdress.adress) {
       router.push('/shipping');
@@ -35,6 +35,7 @@ function Payment() {
     }
   }, []);
   
+  */
 
   const submitHandler = (e) => {
     closeSnackbar();

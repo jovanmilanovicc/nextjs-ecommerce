@@ -15,4 +15,22 @@ const signToken = (user) => {
   );
 };
 
-export { signToken };
+const isAuth = (req, res, next) => {
+  const { authorization } = req.headers;
+  if (authorization) {
+    //Bearer(7)
+    const token = authorization.slice(7, authorization.lenght);
+    jwt.verify(token, process.env.JTW_SECRET, (error, decode) => {
+      if (error) {
+        res.status(401).send({ message: "Token is not valid" });
+      } else {
+        req.user = decode;//user data
+        next();
+      }
+    });
+  } else {
+    res.status(401).send({ message: "Token is not given" });
+  }
+};
+
+export { signToken, isAuth };

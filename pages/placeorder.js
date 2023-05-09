@@ -4,6 +4,7 @@ import { Store } from "@/utils/store";
 import {
   Button,
   Card,
+  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -17,19 +18,26 @@ import {
 } from "@material-ui/core";
 import Image from "next/image";
 import NextLink from "next/link";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import useStyles from "@/utils/styles";
 import CheckoutMenu from "@/components/Checkout";
+import { closeSnackbar, useSnackbar } from "notistack";
+import { getError } from "@/utils/error";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function PlaceOrder() {
+  const { closeSnackbar, enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems, shippingAdress, paymentMethod },
+    userInfo,
   } = state;
+  const [loading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!paymentMethod) {
@@ -37,15 +45,49 @@ function PlaceOrder() {
     }
   }, []);
 
-  const round = num => Math.round(num*100 + Number.EPSILON)/100;
+  const round = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 
-  const itemsPrice = round(cartItems.reduce((a,c) => a+c.price * c.quantity,0));
-  const shippingPrice = itemsPrice > 100 ? 0: 15;
+  const itemsPrice = round(
+    cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
+  );
+  const shippingPrice = itemsPrice > 100 ? 0 : 15;
   const totalPrice = round(itemsPrice + shippingPrice);
 
-  const placeOrderHandler = () => {
+  const placeOrderHandler = async () => {
+    closeSnackbar();
 
-  }
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post(
+        "/api/orders",
+        {
+          orderItems: cartItems,
+          shippingAdress,
+          paymentMethod,
+          itemsPrice,
+          shippingPrice,
+          totalPrice,
+        },
+        {
+          headers: {
+            setAuthorization: `Bearet ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch({ type: "CART_CLEAR" });
+      Cookies.remove("cartItems");
+      setIsLoading(false);
+      router.push(`/order/${data._id}`);
+    } catch (e) {
+      setIsLoading(false);
+      enqueueSnackbar(
+        e.response && e.response.data && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+        { variant: "error" }
+      );
+    }
+  };
 
   return (
     <Layout title="Place Order">
@@ -182,7 +224,11 @@ function PlaceOrder() {
                   Place Order
                 </Button>
               </ListItem>
-              
+              {loading && (
+                <ListItem>
+                  <CircularProgress />
+                </ListItem>
+              )}
             </List>
           </Card>
         </Grid>
