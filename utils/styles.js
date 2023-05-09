@@ -43,7 +43,11 @@ const useStyles = makeStyles({
   },
   transparentBg: {
     backgroundColor: 'transparent'
-  }
+  },
+  section: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
 });
 
 export default useStyles;

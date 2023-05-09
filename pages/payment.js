@@ -26,15 +26,16 @@ function Payment() {
   } = state;
   const router = useRouter();
 
-  /*  useEffect(() => {
-    if (!shippingAddress.address) {
+   useEffect(() => {
+    console.log(shippingAdress);
+    if (!shippingAdress.adress) {
       router.push('/shipping');
     } else {
       setPaymentMethod(Cookies.get('paymentMethod') || '');
     }
   }, []);
   
-*/
+
   const submitHandler = (e) => {
     closeSnackbar();
     e.preventDefault();
