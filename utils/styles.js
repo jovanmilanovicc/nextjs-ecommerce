@@ -48,6 +48,9 @@ const useStyles = makeStyles({
     marginTop: 10,
     marginBottom: 10,
   },
+  error: {
+    color: '#f04040'
+  }
 });
 
 export default useStyles;

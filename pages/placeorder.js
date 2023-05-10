@@ -58,6 +58,7 @@ function PlaceOrder() {
 
     try {
       setIsLoading(true);
+      closeSnackbar();
       const { data } = await axios.post(
         "/api/orders",
         {
@@ -70,22 +71,19 @@ function PlaceOrder() {
         },
         {
           headers: {
-            setAuthorization: `Bearet ${userInfo.token}`,
+            authorization: `Bearet ${userInfo.token}`,
           },
         }
       );
+
       dispatch({ type: "CART_CLEAR" });
       Cookies.remove("cartItems");
       setIsLoading(false);
       router.push(`/order/${data._id}`);
     } catch (e) {
       setIsLoading(false);
-      enqueueSnackbar(
-        e.response && e.response.data && e.response.data.message
-          ? e.response.data.message
-          : e.message,
-        { variant: "error" }
-      );
+
+      enqueueSnackbar(getError(e), { variant: "error" });
     }
   };
 
