@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
+import dynamic from "next/dynamic";
 
 function Payment() {
   const classes = useStyles();
@@ -41,7 +42,7 @@ function Payment() {
     closeSnackbar();
     e.preventDefault();
     if (!paymentMethod) {
-      enqueueSnackbar("Payment method required", { variant: "error" });
+      enqueueSnackbar("Payment method required", { variant: "error", autoHideDuration: 5000 });
     } else {
       dispatch({ type: "SAVE_PAYMENT_METHOD", payload: paymentMethod });
       Cookies.set("paymentMethod", paymentMethod);
@@ -104,4 +105,6 @@ function Payment() {
   );
 }
 
-export default Payment;
+export default dynamic(() => Promise.resolve(Payment), {
+  ssr: false,
+});

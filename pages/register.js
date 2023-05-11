@@ -37,7 +37,7 @@ function Login() {
     closeSnackbar();
 
     if (password !== confirmPassword) {
-      enqueueSnackbar("Passwords dont match", { variant: "error" });
+      enqueueSnackbar("Passwords dont match", { variant: "error", autoHideDuration: 5000 });
       return;
     }
     try {
@@ -53,7 +53,7 @@ function Login() {
     } catch (error) {
       enqueueSnackbar(
         error.response.data ? error.response.data.message : error.message,
-        { variant: "error" }
+        { variant: "error", autoHideDuration: 5000 }
       );
     }
   };

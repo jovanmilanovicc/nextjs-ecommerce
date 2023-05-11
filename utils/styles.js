@@ -50,6 +50,9 @@ const useStyles = makeStyles({
   },
   error: {
     color: '#f04040'
+  },
+  cursorPointer: {
+    cursor: 'pointer'
   }
 });
 

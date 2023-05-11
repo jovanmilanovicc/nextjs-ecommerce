@@ -83,7 +83,7 @@ function PlaceOrder() {
     } catch (e) {
       setIsLoading(false);
 
-      enqueueSnackbar(getError(e), { variant: "error" });
+      enqueueSnackbar(getError(e), { variant: "error", autoHideDuration: 5000 });
     }
   };
 
@@ -104,8 +104,8 @@ function PlaceOrder() {
                 </Typography>
               </ListItem>
               <ListItem>
-                {shippingAdress.fullName}, {shippingAdress.address},{" "}
-                {shippingAdress.city}, {shippingAdress.postalCode},{" "}
+                {shippingAdress.fullName}, {shippingAdress.adress},{" "}
+                {shippingAdress.city}, {shippingAdress.postal},{" "}
                 {shippingAdress.country}
               </ListItem>
             </List>

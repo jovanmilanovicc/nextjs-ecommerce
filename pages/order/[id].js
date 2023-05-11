@@ -90,10 +90,7 @@ function Order({ params }) {
   }, [order]);
   const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
-  function placeOrderHandler() {
-    
-
-  }
+  function placeOrderHandler() {}
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -163,23 +160,19 @@ function Order({ params }) {
                         {orderItems.map((item) => (
                           <TableRow key={item._id}>
                             <TableCell>
-                              <NextLink href={`/product/${item.slug}`} passHref>
-                                <Link>
-                                  <Image
-                                    src={item.image}
-                                    alt={item.name}
-                                    width={50}
-                                    height={50}
-                                  ></Image>
-                                </Link>
+                              <NextLink href={`/product/${item.slug}`}>
+                                <Image
+                                  src={item.image}
+                                  alt={item.name}
+                                  width={50}
+                                  height={50}
+                                ></Image>
                               </NextLink>
                             </TableCell>
 
                             <TableCell>
-                              <NextLink href={`/product/${item.slug}`} passHref>
-                                <Link>
-                                  <Typography>{item.name}</Typography>
-                                </Link>
+                              <NextLink href={`/product/${item.slug}`}>
+                                <Typography>{item.name}</Typography>
                               </NextLink>
                             </TableCell>
                             <TableCell align="right">
@@ -245,7 +238,12 @@ function Order({ params }) {
                         <strong>${totalPrice}</strong>
                       </Typography>
                     </Grid>
-                    <Button fullWidth color="primary" variant="contained" onClick={placeOrderHandler}>
+                    <Button
+                      fullWidth
+                      color="primary"
+                      variant="contained"
+                      onClick={placeOrderHandler}
+                    >
                       Place order
                     </Button>
                   </Grid>

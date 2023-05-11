@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import useStyles from "@/utils/styles";
 import NextLink from "next/link";
 import axios from "axios";
@@ -16,6 +16,7 @@ import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
+import { getError } from "@/utils/error";
 
 function Login() {
   const {
@@ -26,7 +27,14 @@ function Login() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const classes = useStyles();
   const router = useRouter();
-  const { dispatch } = useContext(Store);
+  const { dispatch, state } = useContext(Store);
+  const { userInfo } = state;
+
+  useEffect(() => {
+    if (userInfo) {
+      router.push("/");
+    }
+  }, []);
 
   const onSubmitHandler = async ({ email, password }) => {
     closeSnackbar();
@@ -39,9 +47,12 @@ function Login() {
       dispatch({ type: "USER_LOGIN", payload: data });
       Cookies.set("userInfo", JSON.stringify(data));
       router.push("/");
-    } catch (error) {
-      enqueueSnackbar(error.message, {
+    } catch (e) {
+      enqueueSnackbar( e.response && e.response.data && e.response.data.message
+        ? e.response.data.message
+        : e.message, {
         variant: "error",
+        autoHideDuration: 5000
       });
     }
   };
