@@ -88,7 +88,6 @@ function Order({ params }) {
     } else {
     }
   }, [order]);
-  const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
   function placeOrderHandler() {}
 
