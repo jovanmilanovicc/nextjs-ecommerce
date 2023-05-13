@@ -1,89 +1,91 @@
-import NextLink from "next/link";
-import Layout from "@/components/Layout";
-import { getError } from "@/utils/error";
-import { Store } from "@/utils/store";
-import useStyles from "@/utils/styles";
-import {
-  Grid,
-  Typography,
-  Card,
-  List,
-  ListItem,
-  ListItemText,
-  Button,
-  TextField,
-} from "@material-ui/core";
 import axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import NextLink from "next/link";
+import React, { useEffect, useContext } from "react";
+import {
+  Grid,
+  List,
+  ListItem,
+  Typography,
+  Card,
+  Button,
+  ListItemText,
+  TextField,
+} from "@material-ui/core";
+import { getError } from "@/utils/error";
+import { Store } from "@/utils/store";
+import Layout from "@/components/Layout";
+import useStyles from "@/utils/styles";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import Cookies from "js-cookie";
 
 function Profile() {
-  const router = useRouter();
-  const classes = useStyles();
-  const { state } = useContext(Store);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { userInfo } = state;
+  const { state, dispatch } = useContext(Store);
   const {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const router = useRouter();
+  const classes = useStyles();
+  const { userInfo } = state;
 
   useEffect(() => {
     if (!userInfo) {
-      router.push("/login");
+      return router.push("/login");
     }
+    setValue("name", userInfo.name);
+    setValue("email", userInfo.email);
   }, []);
-
-  const onSubmitHandler = async ({
-    name,
-    email,
-    password,
-    confirmPassword,
-  }) => {
+  const submitHandler = async ({ name, email, password, confirmPassword }) => {
     closeSnackbar();
-
     if (password !== confirmPassword) {
-      enqueueSnackbar("Passwords dont match", {
+      enqueueSnackbar("Passwords don't match", {
         variant: "error",
         autoHideDuration: 5000,
       });
       return;
     }
     try {
-      const { data } = await axios.put("/api/users/profile", {
-        name,
-        email,
-        password,
-      });
-
+      const { data } = await axios.put(
+        "/api/users/profile",
+        {
+          name,
+          email,
+          password,
+        },
+        { headers: { authorization: `Bearer ${userInfo.token}` } }
+      );
       dispatch({ type: "USER_LOGIN", payload: data });
-      Cookies.set("userInfo", JSON.stringify(data));
-      enqueueSnackbar("Profile updated successfuly", { variant: "success" });
-    } catch (e) {
-      enqueueSnackbar(getError(e), {
+      Cookies.set("userInfo", data);
+
+      enqueueSnackbar("Profile updated successfully", {
+        variant: "success",
+        autoHideDuration: 5000,
+      });
+    } catch (err) {
+      enqueueSnackbar(getError(err), {
         variant: "error",
         autoHideDuration: 5000,
       });
     }
   };
-
   return (
     <Layout title="Profile">
       <Grid container spacing={1}>
         <Grid item md={3} xs={12}>
           <Card className={classes.section}>
             <List>
-              <NextLink href="/profile">
+              <NextLink href="/profile" passHref>
                 <ListItem selected button component="a">
                   <ListItemText primary="User Profile"></ListItemText>
                 </ListItem>
               </NextLink>
-              <NextLink href="/order-history">
+              <NextLink href="/order-history" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Order History"></ListItemText>
                 </ListItem>
@@ -101,8 +103,8 @@ function Profile() {
               </ListItem>
               <ListItem>
                 <form
-                  className={[classes.form]}
-                  onSubmit={handleSubmit(onSubmitHandler)}
+                  onSubmit={handleSubmit(submitHandler)}
+                  className={classes.form}
                 >
                   <List>
                     <ListItem>
@@ -116,7 +118,6 @@ function Profile() {
                         }}
                         render={({ field }) => (
                           <TextField
-                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="name"
@@ -126,7 +127,7 @@ function Profile() {
                             helperText={
                               errors.name
                                 ? errors.name.type === "minLength"
-                                  ? "Name lenght needs to be more than 1"
+                                  ? "Name length is more than 1"
                                   : "Name is required"
                                 : ""
                             }
@@ -146,7 +147,6 @@ function Profile() {
                         }}
                         render={({ field }) => (
                           <TextField
-                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="email"
@@ -178,7 +178,6 @@ function Profile() {
                         }}
                         render={({ field }) => (
                           <TextField
-                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="password"
@@ -187,7 +186,7 @@ function Profile() {
                             error={Boolean(errors.password)}
                             helperText={
                               errors.password
-                                ? "Password length need to be more than 5"
+                                ? "Password length is more than 5"
                                 : ""
                             }
                             {...field}
@@ -204,11 +203,10 @@ function Profile() {
                           validate: (value) =>
                             value === "" ||
                             value.length > 5 ||
-                            "Confirm password length is more than 5",
+                            "Confirm Password length is more than 5",
                         }}
                         render={({ field }) => (
                           <TextField
-                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="confirmPassword"
@@ -217,7 +215,7 @@ function Profile() {
                             error={Boolean(errors.confirmPassword)}
                             helperText={
                               errors.password
-                                ? "Confirm Password length need to be more than 5"
+                                ? "Confirm Password length is more than 5"
                                 : ""
                             }
                             {...field}
@@ -228,9 +226,9 @@ function Profile() {
                     <ListItem>
                       <Button
                         variant="contained"
+                        type="submit"
                         fullWidth
                         color="primary"
-                        type="submit"
                       >
                         Update
                       </Button>
@@ -246,6 +244,4 @@ function Profile() {
   );
 }
 
-export default dynamic(() => Promise.resolve(Profile), {
-  ssr: false,
-});
+export default dynamic(() => Promise.resolve(Profile), { ssr: false });
