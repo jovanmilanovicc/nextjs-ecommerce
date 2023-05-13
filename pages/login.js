@@ -30,11 +30,9 @@ function Login() {
   const { dispatch, state } = useContext(Store);
   const { userInfo } = state;
 
-  useEffect(() => {
-    if (userInfo) {
-      router.push("/");
-    }
-  }, []);
+  if (userInfo) {
+    router.push("/");
+  }
 
   const onSubmitHandler = async ({ email, password }) => {
     closeSnackbar();
@@ -48,12 +46,15 @@ function Login() {
       Cookies.set("userInfo", JSON.stringify(data));
       router.push("/");
     } catch (e) {
-      enqueueSnackbar( e.response && e.response.data && e.response.data.message
-        ? e.response.data.message
-        : e.message, {
-        variant: "error",
-        autoHideDuration: 5000
-      });
+      enqueueSnackbar(
+        e.response && e.response.data && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
     }
   };
 

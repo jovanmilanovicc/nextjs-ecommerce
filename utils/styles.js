@@ -53,6 +53,9 @@ const useStyles = makeStyles({
   },
   cursorPointer: {
     cursor: 'pointer'
+  },
+  fullWidth: {
+    width: '100%'
   }
 });
 

@@ -16,6 +16,7 @@ import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
+import { getError } from "@/utils/error";
 
 function Login() {
   const {
@@ -50,9 +51,9 @@ function Login() {
       dispatch({ type: "USER_LOGIN", payload: data });
       Cookies.set("userInfo", JSON.stringify(data));
       router.push("/");
-    } catch (error) {
+    } catch (e) {
       enqueueSnackbar(
-        error.response.data ? error.response.data.message : error.message,
+        getError(e),
         { variant: "error", autoHideDuration: 5000 }
       );
     }
