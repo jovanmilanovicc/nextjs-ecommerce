@@ -17,6 +17,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Button,
 } from "@material-ui/core";
 import axios from "axios";
 import dynamic from "next/dynamic";
@@ -55,7 +56,7 @@ function OrderHistory() {
     const fetchOrders = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(`/api/orders/orders/history`, {
+        const { data } = await axios.get(`/api/orders/history`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -128,7 +129,7 @@ function OrderHistory() {
                                 : "not delivered"}
                             </TableCell>
                             <TableCell>
-                              <NextLink href={`/order/${order._id}`} passHref>
+                              <NextLink href={`/order/${order._id}`}>
                                 <Button variant="contained">Details</Button>
                               </NextLink>
                             </TableCell>
