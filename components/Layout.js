@@ -60,16 +60,19 @@ function Layout({ children, title, description }) {
     setAnchorEl(e.currentTarget);
   };
 
-  const loginMenuCloseHandler = (e) => {
+  const loginMenuCloseHandler = (event, redirect) => {
     setAnchorEl(null);
-  }
+    if (redirect) {
+      router.push(redirect);
+    }
+  };
 
   const logoutClickHandler = () => {
-    dispatch({type: 'USER_LOGOUT'});
-    Cookies.remove('userInfo');
-    Cookies.remove('cartItems');
-    router.push('/');
-  }
+    dispatch({ type: "USER_LOGOUT" });
+    Cookies.remove("userInfo");
+    Cookies.remove("cartItems");
+    router.push("/");
+  };
 
   return (
     <div>
@@ -103,36 +106,47 @@ function Layout({ children, title, description }) {
                   )}
                 </Typography>
               </NextLink>
-              
-                {userInfo ? (
-                  <>
-                    <Button
-                      aria-controls="simple-menu"
-                      aria-haspopup="true"
-                      onClick={loginClickHandler}
-                      className={classes.navbarButton}
-                    >
-                      {userInfo.name}
-                    </Button>
 
-                    <Menu
-                      id="simple-menu"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={loginMenuCloseHandler}
+              {userInfo ? (
+                <>
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={loginClickHandler}
+                    className={classes.navbarButton}
+                  >
+                    {userInfo.name}
+                  </Button>
+
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={loginMenuCloseHandler}
+                  >
+                    <MenuItem
+                      onClick={(e) =>
+                        loginMenuCloseHandler(e, "/order/history")
+                      }
                     >
-                      <MenuItem onClick={loginMenuCloseHandler}>Profile</MenuItem>
-                      <MenuItem onClick={loginMenuCloseHandler}>idk</MenuItem>
-                      <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
-                    </Menu>
-                  </>
-                ) : (
-                  <NextLink href="/login">
-                    <Typography component="span">Login</Typography>
-                  </NextLink>
-                )}
-              
+                      Profile
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) =>
+                        loginMenuCloseHandler(e, "/order/history")
+                      }
+                    >
+                      Order History
+                    </MenuItem>
+                    <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <NextLink href="/login">
+                  <Typography component="span">Login</Typography>
+                </NextLink>
+              )}
             </div>
           </Toolbar>
         </AppBar>
