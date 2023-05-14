@@ -8,15 +8,14 @@ import nextConnect from "next-connect";
 const handler = nextConnect();
 
 handler.get(async (req, res) => {
-    await db.connect();
-    await Product.deleteMany();
-    await Product.insertMany(data.products);
+  await db.connect();
+  await Product.deleteMany();
+  await Product.insertMany(data.products);
 
-    await User.deleteMany();
-    await User.insertMany(data.users)
-    await Order.deleteMany();
-    await db.disconnect();
-    res.send({message: 'Seeded ok'})
+  await User.deleteMany();
+  await User.insertMany(data.users);
+  await db.disconnect();
+  res.send({ message: "Seeded ok" });
 });
 
 export default handler;
