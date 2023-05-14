@@ -8,7 +8,7 @@ const handler = nc({
   onError,
 });
 handler.use(isAuth);
-handler.get(async (req, res) => {
+handler.put(async (req, res) => {
   await db.connect();
   const order = await Order.findById(req.query.id);
   if (order) {
@@ -21,7 +21,7 @@ handler.get(async (req, res) => {
     };
     const paidOrder = await order.save();
     await db.disconnect();
-    res.send({ message: "Prder Paid", order: paidOrder });
+    res.send({ message: "Order Paid", order: paidOrder });
   } else {
     await db.disconnect();
     res.status(404).send({ message: "Order not found" });

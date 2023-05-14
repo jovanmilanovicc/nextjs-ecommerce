@@ -153,6 +153,25 @@ function Order({ params }) {
   }
 
   function payWithCash() {
+    const details = {
+      id: order._id,
+      status: 'COMPLETED',
+      email_address: userInfo.email,
+    }
+    try {
+        
+      dispatch({ type: "PAY_REQUEST" });
+      const { data } = axios.put(`/api/orders/${order._id}/pay`, details, {
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      dispatch({ type: "PAY_SUCCESS", payload: data });
+      enqueueSnackbar("Order is paid", { variant: "success" });
+    } catch (e) {
+      dispatch({ type: "PAY_FAIL", payload: getError(e) });
+      enqueueSnackbar(getError(e), { variant: "error" });
+    }
 
   }
 
