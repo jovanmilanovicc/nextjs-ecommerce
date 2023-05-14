@@ -127,20 +127,29 @@ function Layout({ children, title, description }) {
                   >
                     <MenuItem
                       onClick={(e) =>
-                        loginMenuCloseHandler(e, "/order/history")
+                        loginMenuCloseHandler(e, "/profile")
                       }
                     >
                       Profile
                     </MenuItem>
                     <MenuItem
                       onClick={(e) =>
-                        loginMenuCloseHandler(e, "/order/history")
+                        loginMenuCloseHandler(e, "/order-history")
                       }
                     >
                       Order History
                     </MenuItem>
                     <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
                   </Menu>
+                  {userInfo.isAdmin && (
+                      <MenuItem
+                        onClick={(e) =>
+                          loginMenuCloseHandler(e, '/admin/dashboard')
+                        }
+                      >
+                        Admin Dashboard
+                      </MenuItem>
+                    )}
                 </>
               ) : (
                 <NextLink href="/login">
