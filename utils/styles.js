@@ -31,7 +31,8 @@ const useStyles = makeStyles({
     marginBottom: 10,
   },
   form: {
-    width: "100%",
+    width: "90%",
+    maxWidth: 800,
     margin: '0 auto',
   },
   link: {

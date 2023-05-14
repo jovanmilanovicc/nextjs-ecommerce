@@ -140,8 +140,7 @@ function Layout({ children, title, description }) {
                       Order History
                     </MenuItem>
                     <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
-                  </Menu>
-                  {userInfo.isAdmin && (
+                    {userInfo.isAdmin && (
                       <MenuItem
                         onClick={(e) =>
                           loginMenuCloseHandler(e, '/admin/dashboard')
@@ -150,6 +149,8 @@ function Layout({ children, title, description }) {
                         Admin Dashboard
                       </MenuItem>
                     )}
+                  </Menu>
+                  
                 </>
               ) : (
                 <NextLink href="/login">

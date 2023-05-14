@@ -59,9 +59,9 @@ function Login() {
   };
 
   return (
-    <Layout title="login">
-      <form className={classes.form} onSubmit={handleSubmit(onSubmitHandler)}>
-        <Typography variant="h1" component="h1">
+    <Layout title="Login">
+      <form onSubmit={handleSubmit(onSubmitHandler)} className={classes.form}>
+        <Typography component="h1" variant="h1">
           Login
         </Typography>
         <List>
@@ -106,8 +106,8 @@ function Login() {
               }}
               render={({ field }) => (
                 <TextField
-                  color="secondary"
                   variant="outlined"
+                  color="secondary"
                   fullWidth
                   id="password"
                   label="Password"
@@ -116,7 +116,7 @@ function Login() {
                   helperText={
                     errors.password
                       ? errors.password.type === "minLength"
-                        ? "Password length need to be more than 5"
+                        ? "Password length is more than 5"
                         : "Password is required"
                       : ""
                   }
@@ -126,13 +126,13 @@ function Login() {
             ></Controller>
           </ListItem>
           <ListItem>
-            <Button variant="contained" fullWidth color="primary" type="submit">
+            <Button variant="contained" type="submit" fullWidth color="primary">
               Login
             </Button>
           </ListItem>
           <ListItem>
-            Dont have an account? &nbsp;
-            <NextLink className={classes.link} href="/register">
+            Don&apos;t have an account? &nbsp;
+            <NextLink href={"/register"} passHref>
               Register
             </NextLink>
           </ListItem>
