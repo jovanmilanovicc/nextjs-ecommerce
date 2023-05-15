@@ -134,10 +134,10 @@ function AdminProducts() {
                                 href={`/admin/product/${product._id}`}
                                 passHref
                               >
-                                <Button size="small" variant="contained">
+                                <Button className={classes.actions} size="small" variant="contained">
                                   Edit
                                 </Button>
-                              </NextLink>{' '}
+                              </NextLink>
                               <Button size="small" variant="contained">
                                 Delete
                               </Button>

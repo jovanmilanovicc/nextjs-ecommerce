@@ -57,6 +57,9 @@ const useStyles = makeStyles({
   },
   fullWidth: {
     width: '100%'
+  },
+  actions: {
+    marginBottom: '10px',
   }
 });
 
