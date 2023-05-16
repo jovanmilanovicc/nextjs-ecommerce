@@ -131,7 +131,7 @@ function AdminProducts() {
                             <TableCell>{product.rating}</TableCell>
                             <TableCell>
                               <NextLink
-                                href={`/admin/product/${product._id}`}
+                                href={`/admin/products/${product._id}`}
                                 passHref
                               >
                                 <Button className={classes.actions} size="small" variant="contained">
