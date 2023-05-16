@@ -91,7 +91,7 @@ function ProductEdit({ params }) {
 
       enqueueSnackbar("Product updated successfully", { variant: "success" });
     } catch (err) {
-      enqueueSnackbar(getError(err), { variant: "error" });
+      enqueueSnackbar(err.message, { variant: "error" });
     }
   };
   return (
