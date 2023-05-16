@@ -139,7 +139,7 @@ function ProductEdit({ params }) {
     bodyFormData.append('file', file);
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
-      const { data } = await axios.post('/api/admin/upload', bodyFormData, {
+      const { data } = await axios.post('/api/admin/products/upload', bodyFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           authorization: `Bearer ${userInfo.token}`,
@@ -150,7 +150,7 @@ function ProductEdit({ params }) {
       enqueueSnackbar('File uploaded successfully', { variant: 'success' });
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      enqueueSnackbar(getError(err), { variant: 'error' });
+      enqueueSnackbar(err.message, { variant: 'error' });
     }
   };
 
@@ -198,6 +198,13 @@ function ProductEdit({ params }) {
                   className={classes.form}
                 >
                   <List>
+                  <ListItem>
+                      <Button variant="contained" component="label">
+                        Upload File
+                        <input type="file" onChange={uploadHandler} hidden />
+                      </Button>
+                      {loadingUpload && <CircularProgress />}
+                    </ListItem>
                     <ListItem>
                       <Controller
                         name="name"
@@ -286,13 +293,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
-                    <ListItem>
-                      <Button variant="contained" component="label">
-                        Upload File
-                        <input type="file" onChange={uploadHandler} hidden />
-                      </Button>
-                      {loadingUpload && <CircularProgress />}
-                    </ListItem>
+                    
                     <ListItem>
                       <Controller
                         name="category"
