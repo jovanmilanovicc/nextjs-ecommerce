@@ -94,10 +94,10 @@ function AdminUsers() {
         headers: { authorization: `Bearer ${userInfo.token}` },
       });
       dispatch({ type: 'DELETE_SUCCESS' });
-      enqueueSnackbar('User deleted successfully', { variant: 'success' });
+      enqueueSnackbar('User deleted successfully', { variant: 'success', autoHideDuration: 5000 });
     } catch (err) {
       dispatch({ type: 'DELETE_FAIL' });
-      enqueueSnackbar(getError(err), { variant: 'error' });
+      enqueueSnackbar(err.message, { variant: 'error', autoHideDuration: 5000 });
     }
   };
   return (
@@ -165,7 +165,7 @@ function AdminUsers() {
                             <TableCell>{user.isAdmin ? 'YES' : 'NO'}</TableCell>
                             <TableCell>
                               <NextLink
-                                href={`/admin/user/${user._id}`}
+                                href={`/admin/users/${user._id}`}
                                 passHref
                               >
                                 <Button size="small" variant="contained">
