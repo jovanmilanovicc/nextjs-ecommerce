@@ -72,10 +72,11 @@ function AdminProducts() {
     error: "",
   });
 
+  if (!userInfo.isAdmin) {
+    router.push("/");
+  }
+
   useEffect(() => {
-    if (!userInfo) {
-      router.push("/login");
-    }
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
@@ -116,12 +117,15 @@ function AdminProducts() {
       router.push(`/admin/products/${data.product._id}`);
     } catch (e) {
       dispatch({ type: "CREATE_FAIL" });
-      enqueueSnackbar(e.response && e.response.data && e.response.data.message
-        ? e.response.data.message
-        : e.message, {
-        variant: "error",
-        autoHideDuration: 5000,
-      });
+      enqueueSnackbar(
+        e.response && e.response.data && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
     }
   };
   const deleteHandler = async (productId) => {
@@ -140,12 +144,15 @@ function AdminProducts() {
       });
     } catch (e) {
       dispatch({ type: "DELETE_FAIL" });
-      enqueueSnackbar(e.response && e.response.data && e.response.data.message
-        ? e.response.data.message
-        : e.message, {
-        variant: "error",
-        autoHideDuration: 5000,
-      });
+      enqueueSnackbar(
+        e.response && e.response.data && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
     }
   };
 
@@ -234,7 +241,7 @@ function AdminProducts() {
                             <TableCell>{product.rating}</TableCell>
                             <TableCell>
                               <NextLink
-                                href={`/admin/product/${product._id}`}
+                                href={`/admin/products/${product._id}`}
                                 passHref
                               >
                                 <Button size="small" variant="contained">

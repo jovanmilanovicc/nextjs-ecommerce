@@ -54,10 +54,11 @@ function AdminDashboard() {
     error: "",
   });
 
+  if (!userInfo.isAdmin) {
+    router.push("/");
+  }
+
   useEffect(() => {
-    if (!userInfo) {
-      router.push("/login");
-    }
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });

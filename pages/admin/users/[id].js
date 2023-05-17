@@ -67,31 +67,34 @@ function UserEdit({ params }) {
     setValue,
   } = useForm();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [name, setName] = useState("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const router = useRouter();
   const classes = useStyles();
   const { userInfo } = state;
 
+  if (!userInfo.isAdmin) {
+    return router.push("/");
+  }
+
   useEffect(() => {
-    if (!userInfo) {
-      return router.push("/login");
-    } else {
-      const fetchData = async () => {
-        try {
-          dispatch({ type: "FETCH_REQUEST" });
-          const { data } = await axios.get(`/api/admin/users/${userId}`, {
-            headers: { authorization: `Bearer ${userInfo.token}` },
-          });
-          setIsAdmin(data.isAdmin);
-          dispatch({ type: "FETCH_SUCCESS" });
-          setValue("name", userInfo.name);
-          setValue("email", userInfo.email);
-        } catch (err) {
-          dispatch({ type: "FETCH_FAIL", payload: getError(err) });
-        }
-      };
-      fetchData();
-    }
+    const fetchData = async () => {
+      try {
+        dispatch({ type: "FETCH_REQUEST" });
+        const { data } = await axios.get(`/api/admin/users/${userId}`, {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        });
+        setIsAdmin(data.isAdmin);
+        dispatch({ type: "FETCH_SUCCESS" });
+        setName(data.name);
+        setValue("name", data.name);
+        setValue("email", data.email);
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+      }
+    };
+    fetchData();
   }, []);
 
   const submitHandler = async ({ name, email, password, conPass }) => {
@@ -111,15 +114,22 @@ function UserEdit({ params }) {
           name,
           email,
           password,
+          isAdmin,
         },
         { headers: { authorization: `Bearer ${userInfo.token}` } }
       );
       dispatch({ type: "UPDATE_SUCCESS" });
-      enqueueSnackbar("User updated successfully", { variant: "success" });
+      enqueueSnackbar("User updated successfully", {
+        variant: "success",
+        autoHideDuration: 5000,
+      });
       router.push("/admin/users");
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL", payload: getError(err) });
-      enqueueSnackbar(getError(err), { variant: "error" });
+      enqueueSnackbar(err.message, {
+        variant: "error",
+        autoHideDuration: 5000,
+      });
     }
   };
   return (
@@ -181,6 +191,7 @@ function UserEdit({ params }) {
                         }}
                         render={({ field }) => (
                           <TextField
+                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="name"
@@ -202,6 +213,7 @@ function UserEdit({ params }) {
                         }}
                         render={({ field }) => (
                           <TextField
+                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="email"
@@ -226,6 +238,7 @@ function UserEdit({ params }) {
                         }}
                         render={({ field }) => (
                           <TextField
+                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="password"
@@ -255,6 +268,7 @@ function UserEdit({ params }) {
                         }}
                         render={({ field }) => (
                           <TextField
+                            color="secondary"
                             variant="outlined"
                             fullWidth
                             id="conPass"
@@ -290,7 +304,7 @@ function UserEdit({ params }) {
                         fullWidth
                         color="primary"
                       >
-                        Update
+                        {name === "sample name" ? "Create" : "  Update"}
                       </Button>
                       {loadingUpdate && <CircularProgress />}
                     </ListItem>

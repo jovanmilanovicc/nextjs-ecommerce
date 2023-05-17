@@ -36,15 +36,15 @@ function reducer(state, action) {
       return { ...state, loadingUpdate: false, errorUpdate: "" };
     case "UPDATE_FAIL":
       return { ...state, loadingUpdate: false, errorUpdate: action.payload };
-      case 'UPLOAD_REQUEST':
-      return { ...state, loadingUpload: true, errorUpload: '' };
-    case 'UPLOAD_SUCCESS':
+    case "UPLOAD_REQUEST":
+      return { ...state, loadingUpload: true, errorUpload: "" };
+    case "UPLOAD_SUCCESS":
       return {
         ...state,
         loadingUpload: false,
-        errorUpload: '',
+        errorUpload: "",
       };
-    case 'UPLOAD_FAIL':
+    case "UPLOAD_FAIL":
       return { ...state, loadingUpload: false, errorUpload: action.payload };
     default:
       return state;
@@ -57,7 +57,7 @@ function ProductEdit({ params }) {
   const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
     useReducer(reducer, {
       loading: true,
-      error: '',
+      error: "",
     });
   const {
     handleSubmit,
@@ -70,31 +70,31 @@ function ProductEdit({ params }) {
   const classes = useStyles();
   const { userInfo } = state;
 
+  if (!userInfo.isAdmin) {
+    return router.push("/");
+  }
+
   useEffect(() => {
-    if (!userInfo) {
-      return router.push("/login");
-    } else {
-      const fetchData = async () => {
-        try {
-          dispatch({ type: "FETCH_REQUEST" });
-          const { data } = await axios.get(`/api/admin/products/${productId}`, {
-            headers: { authorization: `Bearer ${userInfo.token}` },
-          });
-          dispatch({ type: "FETCH_SUCCESS" });
-          setValue("name", data.name);
-          setValue("slug", data.slug);
-          setValue("price", data.price);
-          setValue("image", data.image);
-          setValue("category", data.category);
-          setValue("brand", data.brand);
-          setValue("countInStock", data.countInStock);
-          setValue("description", data.description);
-        } catch (err) {
-          dispatch({ type: "FETCH_FAIL", payload: getError(err) });
-        }
-      };
-      fetchData();
-    }
+    const fetchData = async () => {
+      try {
+        dispatch({ type: "FETCH_REQUEST" });
+        const { data } = await axios.get(`/api/admin/products/${productId}`, {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        });
+        dispatch({ type: "FETCH_SUCCESS" });
+        setValue("name", data.name);
+        setValue("slug", data.slug);
+        setValue("price", data.price);
+        setValue("image", data.image);
+        setValue("category", data.category);
+        setValue("brand", data.brand);
+        setValue("countInStock", data.countInStock);
+        setValue("description", data.description);
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+      }
+    };
+    fetchData();
   }, []);
   const submitHandler = async ({
     name,
@@ -136,21 +136,25 @@ function ProductEdit({ params }) {
   const uploadHandler = async (e) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
-    bodyFormData.append('file', file);
+    bodyFormData.append("file", file);
     try {
-      dispatch({ type: 'UPLOAD_REQUEST' });
-      const { data } = await axios.post('/api/admin/products/upload', bodyFormData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          authorization: `Bearer ${userInfo.token}`,
-        },
-      });
-      dispatch({ type: 'UPLOAD_SUCCESS' });
-      setValue('image', data.secure_url);
-      enqueueSnackbar('File uploaded successfully', { variant: 'success' });
+      dispatch({ type: "UPLOAD_REQUEST" });
+      const { data } = await axios.post(
+        "/api/admin/products/upload",
+        bodyFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch({ type: "UPLOAD_SUCCESS" });
+      setValue("image", data.secure_url);
+      enqueueSnackbar("File uploaded successfully", { variant: "success" });
     } catch (err) {
-      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      enqueueSnackbar(err.message, { variant: 'error' });
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      enqueueSnackbar(err.message, { variant: "error" });
     }
   };
 
@@ -203,7 +207,7 @@ function ProductEdit({ params }) {
                   className={classes.form}
                 >
                   <List>
-                  <ListItem>
+                    <ListItem>
                       <Button variant="contained" component="label">
                         Upload File
                         <input type="file" onChange={uploadHandler} hidden />
@@ -298,7 +302,7 @@ function ProductEdit({ params }) {
                         )}
                       ></Controller>
                     </ListItem>
-                    
+
                     <ListItem>
                       <Controller
                         name="category"

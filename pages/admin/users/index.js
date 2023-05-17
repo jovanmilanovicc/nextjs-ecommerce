@@ -42,6 +42,12 @@ function reducer(state, action) {
       return { ...state, loadingDelete: false };
     case "DELETE_RESET":
       return { ...state, loadingDelete: false, successDelete: false };
+    case "CREATE_REQUEST":
+      return { ...state, loadingCreate: true };
+    case "CREATE_SUCCESS":
+      return { ...state, loadingCreate: false };
+    case "CREATE_FAIL":
+      return { ...state, loadingCreate: false };
     default:
       state;
   }
@@ -53,17 +59,20 @@ function AdminUsers() {
   const classes = useStyles();
   const { userInfo } = state;
 
-  const [{ loading, error, users, successDelete, loadingDelete }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      users: [],
-      error: "",
-    });
+  const [
+    { loading, error, users, successDelete, loadingCreate, loadingDelete },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    users: [],
+    error: "",
+  });
+
+  if (!userInfo.isAdmin) {
+    router.push("/");
+  }
 
   useEffect(() => {
-    if (!userInfo) {
-      router.push("/login");
-    }
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
@@ -82,12 +91,13 @@ function AdminUsers() {
     }
   }, [successDelete]);
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const deleteHandler = async (userId) => {
     if (!window.confirm("Are you sure?")) {
       return;
     }
+    closeSnackbar();
     try {
       dispatch({ type: "DELETE_REQUEST" });
       await axios.delete(`/api/admin/users/${userId}`, {
@@ -106,6 +116,42 @@ function AdminUsers() {
       });
     }
   };
+
+  const createHandler = async () => {
+    if (!window.confirm("Are you sure?")) {
+      return;
+    }
+    closeSnackbar();
+    try {
+      dispatch({ type: "CREATE_REQUEST" });
+      const { data } = await axios.post(
+        `/api/admin/users`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: "CREATE_SUCCESS" });
+      enqueueSnackbar("User created successfully", {
+        variant: "success",
+        autoHideDuration: 5000,
+      });
+      console.log(data);
+      router.push(`/admin/users/${data.user._id}`);
+    } catch (e) {
+      dispatch({ type: "CREATE_FAIL" });
+      enqueueSnackbar(
+        e.response && e.response.data && e.response.data.message
+          ? e.response.data.message
+          : e.message,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
+    }
+  };
+
   return (
     <Layout title="Users">
       <Grid container spacing={1}>
@@ -139,10 +185,24 @@ function AdminUsers() {
           <Card className={classes.section}>
             <List>
               <ListItem>
-                <Typography component="h1" variant="h1">
-                  Users
-                </Typography>
-                {loadingDelete && <CircularProgress />}
+                <Grid container alignItems="center">
+                  <Grid item xs={6}>
+                    <Typography component="h1" variant="h1">
+                      Users
+                    </Typography>
+                    {loadingDelete && <CircularProgress />}
+                  </Grid>
+                  <Grid align="right" item xs={6}>
+                    <Button
+                      onClick={createHandler}
+                      color="primary"
+                      variant="contained"
+                    >
+                      Create
+                    </Button>
+                    {loadingCreate && <CircularProgress />}
+                  </Grid>
+                </Grid>
               </ListItem>
 
               <ListItem>

@@ -2,6 +2,7 @@ import nc from 'next-connect';
 import { isAdmin, isAuth } from '@/utils/auth';
 import User from '@/models/User';
 import db from '@/utils/db';
+import bcrypt from "bcryptjs";
 
 const handler = nc();
 handler.use(isAuth, isAdmin);
@@ -19,7 +20,7 @@ handler.put(async (req, res) => {
   if (user) {
     user.name = req.body.name;
     user.email = req.body.email;
-    user.isAdmin  = Boolean(req.body.description);
+    user.isAdmin  = Boolean(req.body.isAdmin);
     user.password = req.body.password
     ? bcrypt.hashSync(req.body.password)
     : user.password;
