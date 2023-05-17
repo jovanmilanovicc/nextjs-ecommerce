@@ -18,13 +18,11 @@ handler.put(async (req, res) => {
   const user = await User.findById(req.query.id);
   if (user) {
     user.name = req.body.name;
-    user.slug = req.body.slug;
-    user.price = req.body.price;
-    user.category = req.body.category;
-    user.image = req.body.image;
-    user.brand = req.body.brand;
-    user.countInStock = req.body.countInStock;
-    user.description = req.body.description;
+    user.email = req.body.email;
+    user.isAdmin  = Boolean(req.body.description);
+    user.password = req.body.password
+    ? bcrypt.hashSync(req.body.password)
+    : user.password;
     await user.save();
     await db.disconnect();
     res.send({ message: 'User Updated Successfully' });
