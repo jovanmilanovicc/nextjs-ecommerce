@@ -45,7 +45,7 @@ const data = {
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet bibendum libero vitae pharetra. Duis nec finibus leo. Ut hendrerit, purus et finibus eleifend, lectus velit dignissim neque, sed ultricies arcu libero a quam. Quisque quis efficitur lacus, in sollicitudin nibh. Phasellus id blandit leo, bibendum blandit erat. Pellentesque id lacinia augue. Quisque luctus condimentum odio mollis molestie. Sed eu suscipit augue, sed bibendum velit. Vivamus rutrum nibh at eros consectetur, sed tristique arcu volutpat.",
     },
     {
-      name: "adidas Patike Superstar",
+      name: "Adidas Patike Superstar",
       slug: "adidas-patike-superstar",
       category: "Shoes",
       image: "/images/adidasP1.jpg",
@@ -57,7 +57,7 @@ const data = {
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet bibendum libero vitae pharetra. Duis nec finibus leo. Ut hendrerit, purus et finibus eleifend, lectus velit dignissim neque, sed ultricies arcu libero a quam. Quisque quis efficitur lacus, in sollicitudin nibh. Phasellus id blandit leo, bibendum blandit erat. Pellentesque id lacinia augue. Quisque luctus condimentum odio mollis molestie. Sed eu suscipit augue, sed bibendum velit. Vivamus rutrum nibh at eros consectetur, sed tristique arcu volutpat.",
     },
     {
-      name: "adidas Patike ASTIR",
+      name: "Adidas Patike ASTIR",
       slug: "adidas-patike-astir",
       category: "Shoes",
       image: "/images/adidasP2.jpg",

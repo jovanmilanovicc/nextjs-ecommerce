@@ -113,7 +113,7 @@ function AdminProducts() {
         variant: "success",
         autoHideDuration: 5000,
       });
-      router.push(`/admin/product/${data.product._id}`);
+      router.push(`/admin/products/${data.product._id}`);
     } catch (e) {
       dispatch({ type: "CREATE_FAIL" });
       enqueueSnackbar(e.response && e.response.data && e.response.data.message
