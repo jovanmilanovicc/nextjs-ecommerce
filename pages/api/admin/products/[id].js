@@ -22,6 +22,8 @@ handler.put(async (req, res) => {
     product.price = req.body.price;
     product.category = req.body.category;
     product.image = req.body.image;
+    product.featuredImage = req.body.featuredImage;
+    product.isFeatured = req.body.isFeatured;
     product.brand = req.body.brand;
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
@@ -34,5 +36,17 @@ handler.put(async (req, res) => {
   }
 });
 
+handler.delete(async (req, res) => {
+  await db.connect();
+  const product = await Product.findById(req.query.id);
+  if (product) {
+    await product.deleteOne();
+    await db.disconnect();
+    res.send({ message: 'Product Deleted' });
+  } else {
+    await db.disconnect();
+    res.status(404).send({ message: 'Product Not Found' });
+  }
+});
 
 export default handler;
