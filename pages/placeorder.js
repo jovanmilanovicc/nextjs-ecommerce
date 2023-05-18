@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Image from "next/image";
-import NextLink from "next/link";
+import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
@@ -142,20 +142,20 @@ function PlaceOrder() {
                       {cartItems.map((item) => (
                         <TableRow key={item._id}>
                           <TableCell>
-                            <NextLink href={`/product/${item.slug}`}>
+                            <Link href={`/product/${item.slug}`}>
                               <Image
                                 src={item.image}
                                 alt={item.name}
                                 width={50}
                                 height={50}
                               ></Image>
-                            </NextLink>
+                            </Link>
                           </TableCell>
 
                           <TableCell>
-                            <NextLink href={`/product/${item.slug}`}>
+                            <Link href={`/product/${item.slug}`}>
                               <Typography>{item.name}</Typography>
-                            </NextLink>
+                            </Link>
                           </TableCell>
                           <TableCell align="right">
                             <Typography>{item.quantity}</Typography>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer } from "react";
 import dynamic from "next/dynamic";
 import Layout from "@/components/Layout";
 import { Store } from "@/utils/store";
-import NextLink from "next/link";
+import Link from "next/link";
 import Image from "next/image";
 import {
   Grid,
@@ -280,20 +280,20 @@ function Order({ params }) {
                         {orderItems.map((item) => (
                           <TableRow key={item._id}>
                             <TableCell>
-                              <NextLink href={`/product/${item.slug}`}>
+                              <Link href={`/product/${item.slug}`}>
                                 <Image
                                   src={item.image}
                                   alt={item.name}
                                   width={50}
                                   height={50}
                                 ></Image>
-                              </NextLink>
+                              </Link>
                             </TableCell>
 
                             <TableCell>
-                              <NextLink href={`/product/${item.slug}`}>
+                              <Link href={`/product/${item.slug}`}>
                                 <Typography>{item.name}</Typography>
-                              </NextLink>
+                              </Link>
                             </TableCell>
                             <TableCell align="right">
                               <Typography>{item.quantity}</Typography>

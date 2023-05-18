@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React, { useContext } from "react";
 import useStyles from "@/utils/styles";
-import NextLink from "next/link";
+import Link from "next/link";
 import axios from "axios";
 import { Store } from "@/utils/store";
 import { useRouter } from "next/router";
@@ -127,9 +127,9 @@ function Login() {
           </ListItem>
           <ListItem>
             Don&apos;t have an account? &nbsp;
-            <NextLink href={"/register"} passHref>
+            <Link href={"/register"} passHref>
               Register
-            </NextLink>
+            </Link>
           </ListItem>
         </List>
       </form>

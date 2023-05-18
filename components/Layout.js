@@ -15,7 +15,7 @@ import {
 import Head from "next/head";
 import React, { useContext, useState } from "react";
 import useStyles from "@/utils/styles";
-import NextLink from "next/link";
+import Link from "next/link";
 import { Store } from "@/utils/store";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
@@ -86,13 +86,13 @@ function Layout({ children, title, description }) {
         <CssBaseline />
         <AppBar position="static" className={classes.navbar}>
           <Toolbar>
-            <NextLink href="/" passHref>
+            <Link href="/" passHref>
               <Typography className={classes.brand}>Ecommerce</Typography>
-            </NextLink>
+            </Link>
             <div className={classes.grow}></div>
             <div>
               <Switch checked={darkMode} onChange={darkModeHandler}></Switch>
-              <NextLink href="/cart" passHref className={classes.rightNavbar}>
+              <Link href="/cart" passHref className={classes.rightNavbar}>
                 <Typography component="span">
                   {cart.cartItems.length > 0 ? (
                     <Badge
@@ -105,7 +105,7 @@ function Layout({ children, title, description }) {
                     "Cart"
                   )}
                 </Typography>
-              </NextLink>
+              </Link>
 
               {userInfo ? (
                 <>
@@ -153,9 +153,9 @@ function Layout({ children, title, description }) {
                   
                 </>
               ) : (
-                <NextLink href="/login">
+                <Link href="/login">
                   <Typography component="span">Login</Typography>
-                </NextLink>
+                </Link>
               )}
             </div>
           </Toolbar>

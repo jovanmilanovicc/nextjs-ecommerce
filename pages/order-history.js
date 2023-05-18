@@ -1,4 +1,4 @@
-import NextLink from "next/link";
+import Link from "next/link";
 import Layout from "@/components/Layout";
 import { getError } from "@/utils/error";
 import { Store } from "@/utils/store";
@@ -73,16 +73,16 @@ function OrderHistory() {
         <Grid item md={3} xs={12}>
           <Card className={classes.section}>
             <List>
-              <NextLink href="/profile">
+              <Link href="/profile">
                 <ListItem button component="a">
                   <ListItemText primary="User Profile"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/order-history">
+              </Link>
+              <Link href="/order-history">
                 <ListItem selected button component="a">
                   <ListItemText primary="Order History"></ListItemText>
                 </ListItem>
-              </NextLink>
+              </Link>
             </List>
           </Card>
         </Grid>
@@ -129,9 +129,9 @@ function OrderHistory() {
                                 : "not delivered"}
                             </TableCell>
                             <TableCell>
-                              <NextLink href={`/order/${order._id}`}>
+                              <Link href={`/order/${order._id}`}>
                                 <Button variant="contained">Details</Button>
-                              </NextLink>
+                              </Link>
                             </TableCell>
                           </TableRow>
                         ))}

@@ -9,7 +9,7 @@ import {
   CardActions,
   Button,
 } from "@material-ui/core";
-import NextLink from "next/link";
+import Link from "next/link";
 import db from "@/utils/db";
 import Product from "@/models/Products";
 import dynamic from "next/dynamic";
@@ -41,7 +41,7 @@ function Home(props) {
           {props.products.map((product) => (
             <Grid item md={4} key={product.name}>
               <Card>
-                <NextLink href={`/product/${product.slug}`}>
+                <Link href={`/product/${product.slug}`}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -62,7 +62,7 @@ function Home(props) {
                       Add To Cart
                     </Button>
                   </CardActions>
-                </NextLink>
+                </Link>
               </Card>
             </Grid>
           ))}

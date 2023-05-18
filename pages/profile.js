@@ -1,7 +1,7 @@
 import axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import NextLink from "next/link";
+import Link from "next/link";
 import React, { useEffect, useContext } from "react";
 import {
   Grid,
@@ -80,16 +80,16 @@ function Profile() {
         <Grid item md={3} xs={12}>
           <Card className={classes.section}>
             <List>
-              <NextLink href="/profile" passHref>
+              <Link href="/profile" passHref>
                 <ListItem selected button component="a">
                   <ListItemText primary="User Profile"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/order-history" passHref>
+              </Link>
+              <Link href="/order-history" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Order History"></ListItemText>
                 </ListItem>
-              </NextLink>
+              </Link>
             </List>
           </Card>
         </Grid>

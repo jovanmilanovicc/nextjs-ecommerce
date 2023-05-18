@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Image from "next/image";
-import NextLink from "next/link";
+import Link from "next/link";
 import React, { useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -60,7 +60,7 @@ function CartScreen() {
       </Typography>
       {state.cart.cartItems.length === 0 ? (
         <div>
-          Cart is empty <NextLink href="/"></NextLink>
+          Cart is empty <Link href="/"></Link>
         </div>
       ) : (
         <Grid container spacing={1}>
@@ -80,19 +80,19 @@ function CartScreen() {
                   {state.cart.cartItems.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell>
-                        <NextLink href={`/product/${item.slug}`}>
+                        <Link href={`/product/${item.slug}`}>
                           <Image
                             src={item.image}
                             alt={item.name}
                             width={50}
                             height={52}
                           ></Image>
-                        </NextLink>
+                        </Link>
                       </TableCell>
                       <TableCell>
-                        <NextLink href={`/product/${item.slug}`}>
+                        <Link href={`/product/${item.slug}`}>
                           <Typography>{item.name}</Typography>
-                        </NextLink>
+                        </Link>
                       </TableCell>
                       <TableCell align="right">
                         <Typography>

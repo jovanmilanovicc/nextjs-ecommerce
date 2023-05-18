@@ -1,7 +1,7 @@
 import axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import NextLink from "next/link";
+import Link from "next/link";
 import React, { useEffect, useContext, useReducer } from "react";
 import {
   CircularProgress,
@@ -78,26 +78,26 @@ function AdminDashboard() {
         <Grid item md={3} xs={12}>
           <Card className={classes.section}>
             <List>
-              <NextLink href="/admin/dashboard" passHref>
+              <Link href="/admin/dashboard" passHref>
                 <ListItem selected button component="a">
                   <ListItemText primary="Admin Dashboard"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/admin/orders" passHref>
+              </Link>
+              <Link href="/admin/orders" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Orders"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/admin/products" passHref>
+              </Link>
+              <Link href="/admin/products" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Products"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/admin/users" passHref>
+              </Link>
+              <Link href="/admin/users" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Users"></ListItemText>
                 </ListItem>
-              </NextLink>
+              </Link>
             </List>
           </Card>
         </Grid>
@@ -120,11 +120,11 @@ function AdminDashboard() {
                           <Typography>Sales</Typography>
                         </CardContent>
                         <CardActions>
-                          <NextLink href="/admin/orders" passHref>
+                          <Link href="/admin/orders" passHref>
                             <Button size="small" color="primary">
                               View sales
                             </Button>
-                          </NextLink>
+                          </Link>
                         </CardActions>
                       </Card>
                     </Grid>
@@ -137,11 +137,11 @@ function AdminDashboard() {
                           <Typography>Orders</Typography>
                         </CardContent>
                         <CardActions>
-                          <NextLink href="/admin/orders" passHref>
+                          <Link href="/admin/orders" passHref>
                             <Button size="small" color="primary">
                               View orders
                             </Button>
-                          </NextLink>
+                          </Link>
                         </CardActions>
                       </Card>
                     </Grid>
@@ -154,11 +154,11 @@ function AdminDashboard() {
                           <Typography>Products</Typography>
                         </CardContent>
                         <CardActions>
-                          <NextLink href="/admin/products" passHref>
+                          <Link href="/admin/products" passHref>
                             <Button size="small" color="primary">
                               View products
                             </Button>
-                          </NextLink>
+                          </Link>
                         </CardActions>
                       </Card>
                     </Grid>
@@ -171,11 +171,11 @@ function AdminDashboard() {
                           <Typography>Users</Typography>
                         </CardContent>
                         <CardActions>
-                          <NextLink href="/admin/users" passHref>
+                          <Link href="/admin/users" passHref>
                             <Button size="small" color="primary">
                               View users
                             </Button>
-                          </NextLink>
+                          </Link>
                         </CardActions>
                       </Card>
                     </Grid>

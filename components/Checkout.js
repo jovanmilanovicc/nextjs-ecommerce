@@ -1,6 +1,6 @@
 import useStyles from "@/utils/styles";
 import { Step, StepLabel, Stepper } from "@material-ui/core";
-import NextLink from "next/link";
+import Link from "next/link";
 import React from "react";
 function CheckoutMenu({ activeStep = 0 }) {
   const classes = useStyles();
@@ -10,9 +10,9 @@ function CheckoutMenu({ activeStep = 0 }) {
         (step) => (
           <Step className={classes.cursorPointer} key={step.name} onClick={() => window.location.href = step.url}>
             <StepLabel>
-            <NextLink href={step.url}>
+            <Link href={step.url}>
                 {step.name}
-                </NextLink>
+                </Link>
             </StepLabel>
           </Step>
         )

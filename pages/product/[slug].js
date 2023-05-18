@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Layout from "@/components/Layout";
-import NextLink from "next/link";
+import Link from "next/link";
 import useStyles from "@/utils/styles";
 import {
   Grid,
@@ -42,9 +42,9 @@ function ProductDetails(props) {
   return (
     <Layout title={product.name}>
       <div className={classes.section}>
-        <NextLink href="/" passHref>
+        <Link href="/" passHref>
           <Typography>Back to products</Typography>
-        </NextLink>
+        </Link>
       </div>
       <Grid container spacing={1}>
         <Grid item md={6} xs={12}>

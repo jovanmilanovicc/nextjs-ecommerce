@@ -1,7 +1,7 @@
 import axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import NextLink from "next/link";
+import Link from "next/link";
 import React, { useEffect, useContext, useReducer, useState } from "react";
 import {
   Grid,
@@ -145,26 +145,26 @@ function UserEdit({ params }) {
         <Grid item md={3} xs={12}>
           <Card className={classes.section}>
             <List>
-              <NextLink href="/admin/dashboard" passHref>
+              <Link href="/admin/dashboard" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Admin Dashboard"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/admin/orders" passHref>
+              </Link>
+              <Link href="/admin/orders" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Orders"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/admin/products" passHref>
+              </Link>
+              <Link href="/admin/products" passHref>
                 <ListItem button component="a">
                   <ListItemText primary="Products"></ListItemText>
                 </ListItem>
-              </NextLink>
-              <NextLink href="/admin/users" passHref>
+              </Link>
+              <Link href="/admin/users" passHref>
                 <ListItem selected button component="a">
                   <ListItemText primary="Users"></ListItemText>
                 </ListItem>
-              </NextLink>
+              </Link>
             </List>
           </Card>
         </Grid>
