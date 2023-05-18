@@ -25,7 +25,6 @@ import useStyles from "../../utils/styles";
 import { enqueueSnackbar } from "notistack";
 import { getError } from "../../utils/error";
 
-import CheckoutMenu from "@/components/Checkout";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 function reducer(state, action) {

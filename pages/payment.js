@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { Store } from "@/utils/store";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import CheckoutMenu from "@/components/Checkout";
 import useStyles from "@/utils/styles";
 import {
@@ -21,10 +21,8 @@ import dynamic from "next/dynamic";
 function Payment() {
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState("");
-  const { state, dispatch } = useContext(Store);
-  const {
-    cart: { shippingAdress },
-  } = state;
+  const { dispatch } = useContext(Store);
+  
   const router = useRouter();
 
  /*  useEffect(() => {

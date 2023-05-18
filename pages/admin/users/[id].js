@@ -74,19 +74,21 @@ function UserEdit({ params }) {
   const classes = useStyles();
   const { userInfo } = state;
 
-  if (!userInfo.isAdmin) {
-    return router.push("/");
-  }
+  
 
   useEffect(() => {
+    if (!userInfo) {
+      return router.push('/login');
+    }
+    
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(`/api/admin/users/${userId}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
-        setIsAdmin(data.isAdmin);
         dispatch({ type: "FETCH_SUCCESS" });
+        setIsAdmin(data.isAdmin);
         setName(data.name);
         setValue("name", data.name);
         setValue("email", data.email);
@@ -94,8 +96,13 @@ function UserEdit({ params }) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
-    fetchData();
-  }, []);
+
+    if (!userInfo.isAdmin) {
+      router.push("/");
+    } else {
+      fetchData();
+    }
+  }, [userId, userInfo.token, setValue, router]);
 
   const submitHandler = async ({ name, email, password, conPass }) => {
     closeSnackbar();

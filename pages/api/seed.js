@@ -1,4 +1,3 @@
-import Order from "@/models/Order";
 import Product from "@/models/Products";
 import User from "@/models/User";
 import data from "@/utils/data";

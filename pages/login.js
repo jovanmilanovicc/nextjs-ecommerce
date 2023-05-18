@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import useStyles from "@/utils/styles";
 import NextLink from "next/link";
 import axios from "axios";
@@ -46,15 +46,10 @@ function Login() {
       Cookies.set("userInfo", JSON.stringify(data));
       router.push("/");
     } catch (e) {
-      enqueueSnackbar(
-        e.response && e.response.data && e.response.data.message
-          ? e.response.data.message
-          : e.message,
-        {
-          variant: "error",
-          autoHideDuration: 5000,
-        }
-      );
+      enqueueSnackbar(getError(e), {
+        variant: "error",
+        autoHideDuration: 5000,
+      });
     }
   };
 

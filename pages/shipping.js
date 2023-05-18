@@ -36,7 +36,7 @@ function Shipping() {
     setValue('city', shippingAdress.city);
     setValue('postal', shippingAdress.postal);
     setValue('country', shippingAdress.country);
-  }, []);
+  });
 
   const classes = useStyles();
   const router = useRouter();

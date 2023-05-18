@@ -70,32 +70,37 @@ function ProductEdit({ params }) {
   const classes = useStyles();
   const { userInfo } = state;
 
-  if (!userInfo.isAdmin) {
-    return router.push("/");
-  }
-
   useEffect(() => {
     const fetchData = async () => {
+      if (!userInfo) {
+        return router.push('/login');
+      }
+      
       try {
-        dispatch({ type: "FETCH_REQUEST" });
+        dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/admin/products/${productId}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
-        dispatch({ type: "FETCH_SUCCESS" });
-        setValue("name", data.name);
-        setValue("slug", data.slug);
-        setValue("price", data.price);
-        setValue("image", data.image);
-        setValue("category", data.category);
-        setValue("brand", data.brand);
-        setValue("countInStock", data.countInStock);
-        setValue("description", data.description);
+        dispatch({ type: 'FETCH_SUCCESS' });
+        setValue('name', data.name);
+        setValue('slug', data.slug);
+        setValue('price', data.price);
+        setValue('image', data.image);
+        setValue('category', data.category);
+        setValue('brand', data.brand);
+        setValue('countInStock', data.countInStock);
+        setValue('description', data.description);
       } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-    fetchData();
-  }, []);
+
+    if (!userInfo.isAdmin) {
+      router.push("/");
+    } else {
+      fetchData();
+    }
+  }, [userInfo, productId, router, setValue]);
   const submitHandler = async ({
     name,
     slug,
@@ -109,7 +114,7 @@ function ProductEdit({ params }) {
     closeSnackbar();
     try {
       dispatch({ type: "UPDATE_REQUEST" });
-      const { data } = await axios.put(
+      await axios.put(
         `/api/admin/products/${productId}`,
         {
           name,

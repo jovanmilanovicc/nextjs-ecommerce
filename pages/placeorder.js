@@ -23,7 +23,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useStyles from "@/utils/styles";
 import CheckoutMenu from "@/components/Checkout";
-import { closeSnackbar, useSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import { getError } from "@/utils/error";
 import axios from "axios";
 import Cookies from "js-cookie";
