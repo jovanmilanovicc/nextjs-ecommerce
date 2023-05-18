@@ -10,7 +10,7 @@ import {
   Card,
   Button,
 } from "@material-ui/core";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Product from "@/models/Products";
 import db from "@/utils/db";
 import axios from "axios";
