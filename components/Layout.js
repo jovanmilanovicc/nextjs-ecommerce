@@ -30,7 +30,6 @@ function Layout({ children, title, description }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const router = useRouter();
   const [query, setQuery] = useState('');
-  const isMobile = useMediaQuery('(max-width: 959.95px)');
   const theme = createTheme({
     typography: {
       h1: {
