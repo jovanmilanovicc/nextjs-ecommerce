@@ -11,8 +11,12 @@ import {
   Button,
   Menu,
   MenuItem,
+  InputBase,
+  IconButton,
+  useMediaQuery,
 } from "@material-ui/core";
 import Head from "next/head";
+import SearchIcon from '@material-ui/icons/Search';
 import React, { useContext, useState } from "react";
 import useStyles from "@/utils/styles";
 import Link from "next/link";
@@ -25,6 +29,8 @@ function Layout({ children, title, description }) {
   const { darkMode, cart, userInfo } = state;
   const [anchorEl, setAnchorEl] = useState(null);
   const router = useRouter();
+  const [query, setQuery] = useState('');
+  const isMobile = useMediaQuery('(max-width: 959.95px)');
   const theme = createTheme({
     typography: {
       h1: {
@@ -74,6 +80,14 @@ function Layout({ children, title, description }) {
     router.push("/");
   };
 
+  const queryChangeHandler = (e) => {
+    setQuery(e.target.value);
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push(`/search?query=${query}`);
+  };
+
   return (
     <div>
       <Head>
@@ -90,6 +104,26 @@ function Layout({ children, title, description }) {
               <Typography className={classes.brand}>Ecommerce</Typography>
             </Link>
             <div className={classes.grow}></div>
+            
+            <div className={classes.searchSection}>
+              <form onSubmit={submitHandler} className={classes.searchForm}>
+                <InputBase
+                  name="query"
+                  className={classes.searchInput}
+                  placeholder="Search products"
+                  onChange={queryChangeHandler}
+                />
+                <IconButton
+                  type="submit"
+                  className={classes.iconButton}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </form>
+            </div>
+            <div className={classes.grow}>
+            </div>
             <div>
               <Switch checked={darkMode} onChange={darkModeHandler}></Switch>
               <Link href="/cart" passHref className={classes.rightNavbar}>
