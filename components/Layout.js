@@ -13,7 +13,6 @@ import {
   MenuItem,
   InputBase,
   IconButton,
-  useMediaQuery,
 } from "@material-ui/core";
 import Head from "next/head";
 import SearchIcon from '@material-ui/icons/Search';
