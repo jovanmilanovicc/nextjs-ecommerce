@@ -12,6 +12,7 @@
     "@anatoliygatt/dark-mode-toggle": "^1.0.1",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@paypal/react-paypal-js": "^7.8.3",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
