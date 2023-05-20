@@ -123,6 +123,8 @@ function Layout({ children, title, description }) {
             <div className={classes.grow}>
             </div>
             <div>
+              
+              <div className={classes.rightNavbar}>
               <Switch checked={darkMode} onChange={darkModeHandler}></Switch>
               <Link href="/cart" passHref className={classes.rightNavbar}>
                 <Typography component="span">
@@ -189,6 +191,7 @@ function Layout({ children, title, description }) {
                   <Typography component="span">Login</Typography>
                 </Link>
               )}
+              </div>
             </div>
           </Toolbar>
         </AppBar>

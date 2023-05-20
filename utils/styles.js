@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
   rightNavbar: {
     padding: "0px 8px",
+    display: "flex",
+    alignItems: "center",
     fontSize: 18,
   },
   section: {
@@ -33,70 +35,71 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%",
     maxWidth: 800,
-    margin: '0 auto',
+    margin: "0 auto",
   },
   link: {
-    color: '#f0c000',
+    color: "#f0c000",
   },
   navbarButton: {
-    color: '#ffffff',
-    textTransform: 'initial',
+    color: "#ffffff",
+    textTransform: "initial",
   },
   transparentBg: {
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent",
   },
   section: {
     marginTop: 10,
     marginBottom: 10,
   },
   error: {
-    color: '#f04040'
+    color: "#f04040",
   },
   cursorPointer: {
-    cursor: 'pointer'
+    cursor: "pointer",
   },
   fullWidth: {
-    width: '100%'
+    width: "100%",
   },
   actions: {
-    marginBottom: '10px',
+    marginBottom: "10px",
   },
   menuButton: { padding: 0 },
   // search
   searchSection: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
+    display: "flex",
+    flexBasis: "70%",
+    [theme.breakpoints.up("md")]: {
+      flexBasis: "auto",
     },
   },
   searchForm: {
-    border: '1px solid #ffffff',
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
+    border: "1px solid #ffffff",
+    backgroundColor: "#ffffff",
+    borderRadius: '5px',
   },
   searchInput: {
-    paddingLeft: 5,
-    color: '#000000',
-    '& ::placeholder': {
-      color: '#606060',
+    paddingLeft: 10,
+    color: "#000000",
+    "& ::placeholder": {
+      color: "#606060",
     },
   },
   iconButton: {
-    backgroundColor: '#f8c040',
+    backgroundColor: "#f8c040",
     padding: 5,
-    borderRadius: '0 5px 5px 0',
-    '& span': {
-      color: '#000000',
+    borderRadius: "0 5px 5px 0",
+    "& span": {
+      color: "#000000",
     },
   },
   reviewForm: {
     maxWidth: 800,
-    width: '100%',
+    width: "100%",
   },
   reviewItem: {
-    marginRight: '1rem',
-    borderRight: '1px #808080 solid',
-    paddingRight: '1rem',
+    marginRight: "1rem",
+    borderRight: "1px #808080 solid",
+    paddingRight: "1rem",
   },
 }));
 
