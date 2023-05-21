@@ -1,15 +1,5 @@
 import Layout from "@/components/Layout";
-import {
-  CardActionArea,
-  CardMedia,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from "@material-ui/core";
-import Link from "next/link";
+import { Grid } from "@material-ui/core";
 import db from "@/utils/db";
 import Product from "@/models/Products";
 import dynamic from "next/dynamic";
@@ -17,7 +7,7 @@ import axios from "axios";
 import { Store } from "@/utils/store";
 import { useContext } from "react";
 import { useRouter } from "next/router";
-import { Rating } from "@material-ui/lab";
+import ProductItem from "@/components/ProductItem";
 
 function Home(props) {
   const router = useRouter();
@@ -41,31 +31,10 @@ function Home(props) {
         <Grid container spacing={3}>
           {props.products.map((product) => (
             <Grid item md={4} key={product.name}>
-              <Card>
-                <Link href={`/product/${product.slug}`}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      image={product.image}
-                      title={product.name}
-                    />
-                    <CardContent>
-                      <Typography>{product.name}</Typography>
-                      <Rating value={product.rating} readOnly></Rating>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <Typography>${product.price}</Typography>
-                    <Button
-                      size="small"
-                      color="primary"
-                      onClick={() => addToCartHandler(product)}
-                    >
-                      Add To Cart
-                    </Button>
-                  </CardActions>
-                </Link>
-              </Card>
+              <ProductItem
+                product={product}
+                addToCartHandler={addToCartHandler}
+              />
             </Grid>
           ))}
         </Grid>

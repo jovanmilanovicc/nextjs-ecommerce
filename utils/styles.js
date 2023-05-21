@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
   },
   menuButton: { padding: 0 },
+  mt1: { marginTop: '1rem' },
   // search
   searchSection: {
     display: "flex",
@@ -100,6 +101,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "1rem",
     borderRight: "1px #808080 solid",
     paddingRight: "1rem",
+  },
+  sort: {
+    marginRight: 5,
   },
 }));
 
