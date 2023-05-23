@@ -21,11 +21,13 @@ function Shipping() {
     userInfo,
     cart: { shippingAdress },
   } = state;
+  const { location } = shippingAdress;
   const {
     handleSubmit,
     control,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm();
   useEffect(() => {
     if (!userInfo) {
@@ -45,13 +47,34 @@ function Shipping() {
   const onSubmitHandler = ({ fullName, adress, city, postal, country }) => {
     dispatch({
       type: "SAVE_SHIPPINING_ADRESS",
-      payload: { fullName, adress, city, postal, country },
+      payload: { fullName, adress, city, postal, country, location },
     });
     Cookies.set(
       "shippingAdress",
-      JSON.stringify({ fullName, adress, city, postal, country })
+      JSON.stringify({ fullName, adress, city, postal, country, location })
     );
     router.push("/payment");
+  };
+
+  const chooseLocationHandler = () => {
+    const fullName = getValues('fullName');
+    const address = getValues('address');
+    const city = getValues('city');
+    const postalCode = getValues('postalCode');
+    const country = getValues('country');
+    dispatch({
+      type: 'SAVE_SHIPPING_ADDRESS',
+      payload: { fullName, address, city, postalCode, country },
+    });
+    Cookies.set('shippingAddress', {
+      fullName,
+      address,
+      city,
+      postalCode,
+      country,
+      location,
+    });
+    router.push('/map');
   };
 
   return (
@@ -206,6 +229,18 @@ function Shipping() {
                 ></TextField>
               )}
             ></Controller>
+          </ListItem>
+          <ListItem>
+            <Button
+              variant="contained"
+              type="button"
+              onClick={chooseLocationHandler}
+            >
+              Choose on map
+            </Button>
+            <Typography>
+              {location.lat && `${location.lat}, ${location.lat}`}
+            </Typography>
           </ListItem>
           <ListItem>
             <Button variant="contained" fullWidth color="primary" type="submit">

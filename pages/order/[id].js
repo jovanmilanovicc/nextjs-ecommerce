@@ -236,6 +236,16 @@ function Order({ params }) {
                   {shippingAdress.fullName}, {shippingAdress.adress},{" "}
                   {shippingAdress.city}, {shippingAdress.postal},{" "}
                   {shippingAdress.country}
+                  &nbsp;
+                  {shippingAddress.location && (
+                    <Link
+                      variant="button"
+                      target="_new"
+                      href={`https://maps.google.com?q=${shippingAdress.location.lat},${shippingAdress.location.lng}`}
+                    >
+                      Show On Map
+                    </Link>
+                  )}
                 </ListItem>
                 <ListItem>
                   Status:{" "}

@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
   },
   menuButton: { padding: 0 },
-  mt1: { marginTop: '1rem' },
+  mt1: { marginTop: "1rem" },
   // search
   searchSection: {
     display: "flex",
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   searchForm: {
     border: "1px solid #ffffff",
     backgroundColor: "#ffffff",
-    borderRadius: '5px',
+    borderRadius: "5px",
   },
   searchInput: {
     paddingLeft: 10,
@@ -104,6 +104,19 @@ const useStyles = makeStyles((theme) => ({
   },
   sort: {
     marginRight: 5,
+  },
+  fullContainer: { height: "100vh" },
+  mapInputBox: {
+    position: "absolute",
+    display: "flex",
+    left: 0,
+    right: 0,
+    margin: "10px auto",
+    width: 300,
+    height: 40,
+    "& input": {
+      width: 250,
+    },
   },
 }));
 
