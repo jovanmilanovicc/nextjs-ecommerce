@@ -237,7 +237,7 @@ function Order({ params }) {
                   {shippingAdress.city}, {shippingAdress.postal},{" "}
                   {shippingAdress.country}
                   &nbsp;
-                  {shippingAddress.location && (
+                  {shippingAdress.location && (
                     <Link
                       variant="button"
                       target="_new"
